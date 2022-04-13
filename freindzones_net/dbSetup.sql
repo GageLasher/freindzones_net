@@ -6,3 +6,10 @@ CREATE TABLE IF NOT EXISTS accounts(
   email varchar(255) COMMENT 'User Email',
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
+CREATE TABLE IF NOT EXISTS follows(
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  follower VARCHAR(255),
+  following VARCHAR(255),
+  FOREIGN KEY (follower) REFERENCES accounts(id) ON DELETE CASCADE,
+  FOREIGN KEY (following) REFERENCES accounts(id) ON DELETE CASCADE
+) default charset utf8 COMMENT '';

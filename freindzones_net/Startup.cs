@@ -1,17 +1,10 @@
- using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using freindzones_net.Repositories;
@@ -39,9 +32,13 @@ namespace freindzones_net
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "freindzones_net", Version = "v1" });
             });
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
-            
+
             services.AddScoped<AccountsRepository>();
             services.AddScoped<AccountService>();
+            services.AddTransient<ProfilesRepository>();
+            services.AddTransient<ProfilesService>();
+            services.AddTransient<FollowsRepository>();
+            services.AddTransient<FollowsService>();
         }
 
         private void ConfigureCors(IServiceCollection services)
@@ -94,10 +91,10 @@ namespace freindzones_net
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();
