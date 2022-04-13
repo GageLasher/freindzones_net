@@ -57,5 +57,19 @@ namespace freindzones_net.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet("{id}/followers")]
+        public ActionResult<List<ProfileFollow>> GetProfileFollowers(string id)
+        {
+            try
+            {
+                List<ProfileFollow> followers = _ps.GetFollowers(id);
+                return Ok(followers);
+            }
+            catch (System.Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

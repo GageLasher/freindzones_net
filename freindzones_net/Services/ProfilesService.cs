@@ -27,5 +27,10 @@ namespace freindzones_net.Services
         {
             return _pRepo.GetFollowingByProfileId(id);
         }
+
+        internal List<ProfileFollow> GetFollowers(string id)
+        {
+            return _pRepo.GetFollowersByProfileId(id);
+        }
     }
 }

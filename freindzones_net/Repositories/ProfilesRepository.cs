@@ -37,6 +37,19 @@ namespace freindzones_net.Repositories
             return _db.QueryFirstOrDefault<Profile>(sql, new { id });
         }
 
+        internal List<ProfileFollow> GetFollowersByProfileId(string id)
+        {
+            string sql = @"
+                SELECT
+                f.id AS FollowId,
+                a.*
+                FROM follows f
+                JOIN accounts a ON a.id = f.following
+                WHERE f.follower = @id
+            ";
+            return _db.Query<ProfileFollow>(sql, new { id }).ToList();
+        }
+
         internal List<ProfileFollow> GetFollowingByProfileId(string id)
         {
             string sql = @"
